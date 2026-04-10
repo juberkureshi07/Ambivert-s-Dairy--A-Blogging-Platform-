@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
-import { db, OperationType, handleFirestoreError } from '../firebase';
+import { db, handleFirestoreError } from '../firebase';
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { MessageSquare, Clock, User } from 'lucide-react';
@@ -31,7 +31,7 @@ export const Feed: React.FC = () => {
       setPosts(postsData);
       setLoading(false);
     }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, postsPath);
+      handleFirestoreError(error, 'LIST_POSTS', postsPath);
     });
 
     return unsubscribe;

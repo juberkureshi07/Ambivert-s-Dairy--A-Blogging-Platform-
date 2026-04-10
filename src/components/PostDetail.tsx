@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { doc, getDoc, deleteDoc, Timestamp } from 'firebase/firestore';
-import { db, auth, OperationType, handleFirestoreError } from '../firebase';
+import { db, auth, handleFirestoreError } from '../firebase';
 import { useParams, useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { Trash2, User, Clock, Share2, Check } from 'lucide-react';
@@ -34,7 +34,7 @@ export const PostDetail: React.FC = () => {
           navigate('/');
         }
       } catch (err) {
-        handleFirestoreError(err, OperationType.GET, postPath);
+        handleFirestoreError(err, 'GET_POST', postPath);
       } finally {
         setLoading(false);
       }
@@ -52,7 +52,7 @@ export const PostDetail: React.FC = () => {
       await deleteDoc(doc(db, postPath));
       navigate('/');
     } catch (err) {
-      handleFirestoreError(err, OperationType.DELETE, postPath);
+      handleFirestoreError(err, 'DELETE_POST', postPath);
     }
   };
 

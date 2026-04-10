@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth, db, OperationType, handleFirestoreError } from '../firebase';
+import { auth, db, handleFirestoreError } from '../firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -36,7 +36,7 @@ export const Register: React.FC = () => {
           createdAt: serverTimestamp()
         });
       } catch (err) {
-        handleFirestoreError(err, OperationType.WRITE, userPath);
+        handleFirestoreError(err, 'CREATE_USER_DOC', userPath);
       }
 
       navigate('/');

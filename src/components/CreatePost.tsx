@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage, auth, OperationType, handleFirestoreError } from '../firebase';
+import { db, storage, auth, handleFirestoreError } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { Image as ImageIcon, X, Send } from 'lucide-react';
 
@@ -46,7 +46,7 @@ export const CreatePost: React.FC = () => {
 
       navigate('/');
     } catch (err) {
-      handleFirestoreError(err, OperationType.WRITE, 'posts');
+      handleFirestoreError(err, 'CREATE_POST', 'posts');
     } finally {
       setLoading(false);
     }
