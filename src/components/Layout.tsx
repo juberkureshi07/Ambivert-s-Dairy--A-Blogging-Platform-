@@ -11,7 +11,7 @@ interface LayoutProps {
   showBack?: boolean;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ children, title = "BlogApp", showBack = false }) => {
+export const Layout: React.FC<LayoutProps> = ({ children, title = "Ambivert’s Diary", showBack = false }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();

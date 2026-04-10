@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:title="Blog Feed"
+            app:title="Ambivert’s Diary"
             app:titleTextColor="@android:color/white" />
 
         <ProgressBar

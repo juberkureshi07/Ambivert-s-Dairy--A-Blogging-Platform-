@@ -1,4 +1,4 @@
-# Android Blogging App (Java + Firebase)
+# Ambivert’s Diary (Java + Firebase)
 
 This folder contains the complete Android Studio project source code for the Blogging Application.
 
