@@ -91,3 +91,10 @@ The application uses strict Firestore Security Rules to ensure:
 
 ## 📝 License
 This project is licensed under the Apache-2.0 License.
+
+---
+
+## Author
+
+Developed by Juber Kureshi
+© 2026 Juber Kureshi. All rights reserved.
