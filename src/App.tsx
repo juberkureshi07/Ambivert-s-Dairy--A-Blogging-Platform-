@@ -8,6 +8,7 @@ import { Register } from './components/Register';
 import { Feed } from './components/Feed';
 import { CreatePost } from './components/CreatePost';
 import { PostDetail } from './components/PostDetail';
+import { NotFound } from './components/NotFound';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
@@ -48,6 +49,11 @@ const AppContent: React.FC = () => {
             <PostDetail />
           </Layout>
         </PrivateRoute>
+      } />
+      <Route path="*" element={
+        <Layout title="Not Found" showBack>
+          <NotFound />
+        </Layout>
       } />
     </Routes>
   );
