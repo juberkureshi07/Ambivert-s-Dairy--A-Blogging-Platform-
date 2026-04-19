@@ -30,9 +30,12 @@ export const Layout: React.FC<LayoutProps> = ({ children, title = "Ambivert’s 
             <ArrowLeft size={24} />
           </button>
         ) : (
-          <div className="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center mr-3">
+          <Link 
+            to={user ? `/profile/${user.uid}` : "/login"} 
+            className="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center mr-3 hover:bg-indigo-400 transition-colors"
+          >
             <UserIcon size={20} />
-          </div>
+          </Link>
         )}
         <h1 className="text-xl font-medium flex-1 truncate">{title}</h1>
         {user && (

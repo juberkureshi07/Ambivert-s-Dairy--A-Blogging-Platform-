@@ -24,6 +24,7 @@
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.CreatePostActivity" />
+        <activity android:name=".activities.EditPostActivity" />
         <activity android:name=".activities.PostDetailActivity" />
 
     </application>

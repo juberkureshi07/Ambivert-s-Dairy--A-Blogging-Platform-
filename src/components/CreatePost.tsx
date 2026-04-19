@@ -11,11 +11,20 @@ export const CreatePost: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null);
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      
+      // Basic validation: 5MB limit
+      if (file.size > 5 * 1024 * 1024) {
+        setError("Image size must be less than 5MB");
+        return;
+      }
+
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
     }
@@ -45,8 +54,9 @@ export const CreatePost: React.FC = () => {
       });
 
       navigate('/');
-    } catch (err) {
-      handleFirestoreError(err, 'CREATE_POST', 'posts');
+    } catch (err: any) {
+      setError(err?.message || 'Failed to publish post. Please try again.');
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -91,6 +101,12 @@ export const CreatePost: React.FC = () => {
           </div>
           <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
         </label>
+      )}
+      
+      {error && (
+        <p className="text-red-500 text-sm font-medium bg-red-50 p-3 rounded-lg border border-red-100 italic">
+          {error}
+        </p>
       )}
 
       <button

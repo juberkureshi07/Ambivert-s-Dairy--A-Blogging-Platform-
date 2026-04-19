@@ -1,6 +1,9 @@
 package com.example.blogapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -23,6 +26,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private FirebaseFirestore db;
     private String postId;
+    private Post currentPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,8 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
 
                 if (post.getAuthorId().equals(FirebaseAuth.getInstance().getUid())) {
+                    currentPost = post;
+                    invalidateOptionsMenu();
                     deleteFab.setVisibility(View.VISIBLE);
                     deleteFab.setOnClickListener(v -> deletePost());
                 }
@@ -76,5 +82,35 @@ public class PostDetailActivity extends AppCompatActivity {
             Toast.makeText(PostDetailActivity.this, "Post deleted", Toast.LENGTH_SHORT).show();
             finish();
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_post_detail, menu);
+        MenuItem editItem = menu.findItem(R.id.action_edit);
+        if (currentPost != null && currentPost.getAuthorId().equals(FirebaseAuth.getInstance().getUid())) {
+            editItem.setVisible(true);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_edit) {
+            Intent intent = new Intent(this, EditPostActivity.class);
+            intent.putExtra("postId", postId);
+            intent.putExtra("title", currentPost.getTitle());
+            intent.putExtra("content", currentPost.getContent());
+            intent.putExtra("imageUrl", currentPost.getImageUrl());
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadPost(); // Refresh after edit
     }
 }

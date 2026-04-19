@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { doc, getDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { db, auth, handleFirestoreError } from '../firebase';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
-import { Trash2, User, Clock, Share2, Check } from 'lucide-react';
+import { Trash2, User, Clock, Share2, Check, Edit3 } from 'lucide-react';
 
 interface Post {
   id: string;
@@ -108,18 +108,21 @@ export const PostDetail: React.FC = () => {
         )}
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600">
+            <Link 
+              to={`/profile/${post.authorId}`}
+              className="flex items-center space-x-3 group"
+            >
+              <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 group-hover:bg-indigo-200 transition-colors">
                 <User size={20} />
               </div>
               <div>
-                <p className="text-sm font-bold text-gray-900">{post.authorName}</p>
+                <p className="text-sm font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">{post.authorName}</p>
                 <div className="flex items-center text-xs text-gray-400">
                   <Clock size={12} className="mr-1" />
                   <span>{post.timestamp ? formatDistanceToNow(post.timestamp.toDate(), { addSuffix: true }) : 'Just now'}</span>
                 </div>
               </div>
-            </div>
+            </Link>
             <div className="flex space-x-2 relative">
               <button
                 onClick={handleShare}
@@ -133,12 +136,20 @@ export const PostDetail: React.FC = () => {
                 </div>
               )}
               {isAuthor && (
-                <button
-                  onClick={handleDelete}
-                  className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                >
-                  <Trash2 size={20} />
-                </button>
+                <>
+                  <Link
+                    to={`/edit/${post.id}`}
+                    className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors"
+                  >
+                    <Edit3 size={20} />
+                  </Link>
+                  <button
+                    onClick={handleDelete}
+                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+                </>
               )}
             </div>
           </div>

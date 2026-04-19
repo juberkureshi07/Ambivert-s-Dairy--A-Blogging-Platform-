@@ -7,6 +7,8 @@ import { Login } from './components/Login';
 import { Register } from './components/Register';
 import { Feed } from './components/Feed';
 import { CreatePost } from './components/CreatePost';
+import { EditPost } from './components/EditPost';
+import { Profile } from './components/Profile';
 import { PostDetail } from './components/PostDetail';
 import { NotFound } from './components/NotFound';
 
@@ -43,10 +45,24 @@ const AppContent: React.FC = () => {
           </Layout>
         </PrivateRoute>
       } />
+      <Route path="/edit/:id" element={
+        <PrivateRoute>
+          <Layout title="Edit Post" showBack>
+            <EditPost />
+          </Layout>
+        </PrivateRoute>
+      } />
       <Route path="/post/:id" element={
         <PrivateRoute>
           <Layout title="Post Detail" showBack>
             <PostDetail />
+          </Layout>
+        </PrivateRoute>
+      } />
+      <Route path="/profile/:userId" element={
+        <PrivateRoute>
+          <Layout title="User Profile" showBack>
+            <Profile />
           </Layout>
         </PrivateRoute>
       } />
