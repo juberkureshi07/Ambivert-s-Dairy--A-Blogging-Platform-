@@ -5,6 +5,7 @@ import { db, storage, auth, handleFirestoreError } from '../firebase';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Image as ImageIcon, X, Save, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
+import { NotFound } from './NotFound';
 
 export const EditPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,6 +14,7 @@ export const EditPost: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [existingImageUrl, setExistingImageUrl] = useState<string | null>(null);
+  const [postFound, setPostFound] = useState(true);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,15 +32,17 @@ export const EditPost: React.FC = () => {
             navigate('/');
             return;
           }
+          setPostFound(true);
           setTitle(data.title);
           setContent(data.content);
           setExistingImageUrl(data.imageUrl || null);
           setImagePreview(data.imageUrl || null);
         } else {
-          navigate('/');
+          setPostFound(false);
         }
       } catch (err) {
         handleFirestoreError(err, 'FETCH_POST_FOR_EDIT', `posts/${id}`);
+        setPostFound(false);
       } finally {
         setLoading(false);
       }
@@ -108,6 +112,10 @@ export const EditPost: React.FC = () => {
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
       </div>
     );
+  }
+
+  if (!postFound) {
+    return <NotFound />;
   }
 
   return (

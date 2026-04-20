@@ -52,7 +52,7 @@ public class PostDetailActivity extends AppCompatActivity {
         db.collection("posts").document(postId).get().addOnSuccessListener(documentSnapshot -> {
             progressBar.setVisibility(View.GONE);
             Post post = documentSnapshot.toObject(Post.class);
-            if (post != null) {
+            if (post != null && documentSnapshot.exists()) {
                 title.setText(post.getTitle());
                 content.setText(post.getContent());
                 author.setText("By " + post.getAuthorName());
@@ -73,6 +73,10 @@ public class PostDetailActivity extends AppCompatActivity {
                     deleteFab.setVisibility(View.VISIBLE);
                     deleteFab.setOnClickListener(v -> deletePost());
                 }
+            } else {
+                Intent intent = new Intent(this, NotFoundActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

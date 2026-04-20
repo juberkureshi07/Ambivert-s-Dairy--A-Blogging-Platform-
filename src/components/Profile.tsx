@@ -5,6 +5,7 @@ import { db, handleFirestoreError } from '../firebase';
 import { formatDistanceToNow } from 'date-fns';
 import { MessageSquare, Clock, User as UserIcon, Calendar, Mail } from 'lucide-react';
 import { motion } from 'motion/react';
+import { NotFound } from './NotFound';
 
 interface Post {
   id: string;
@@ -74,6 +75,10 @@ export const Profile: React.FC = () => {
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
       </div>
     );
+  }
+
+  if (!profile && !loading) {
+    return <NotFound />;
   }
 
   return (

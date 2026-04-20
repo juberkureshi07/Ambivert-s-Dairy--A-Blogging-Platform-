@@ -4,6 +4,7 @@ import { db, auth, handleFirestoreError } from '../firebase';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { Trash2, User, Clock, Share2, Check, Edit3 } from 'lucide-react';
+import { NotFound } from './NotFound';
 
 interface Post {
   id: string;
@@ -29,9 +30,11 @@ export const PostDetail: React.FC = () => {
       try {
         const docSnap = await getDoc(doc(db, postPath));
         if (docSnap.exists()) {
-          setPost({ id: docSnap.id, ...docSnap.data() } as Post);
+          const data = docSnap.data();
+          setPost({ id: docSnap.id, ...data } as Post);
         } else {
-          navigate('/');
+          setLoading(false);
+          setPost(null);
         }
       } catch (err) {
         handleFirestoreError(err, 'GET_POST', postPath);
@@ -91,7 +94,9 @@ export const PostDetail: React.FC = () => {
     );
   }
 
-  if (!post) return null;
+  if (!post) {
+    return <NotFound />;
+  }
 
   const isAuthor = auth.currentUser?.uid === post.authorId;
 

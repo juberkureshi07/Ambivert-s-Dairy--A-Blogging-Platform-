@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="404"
+        android:textSize="120sp"
+        android:textStyle="bold"
+        android:textColor="#F3F4F6"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Page Not Found"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="-40dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The content you are looking for does not exist or has been moved."
+        android:textAlignment="center"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/darker_gray"/>
+
+    <Button
+        android:id="@+id/not_found_home_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back to Home"
+        android:layout_marginTop="32dp"
+        style="@style/Widget.MaterialComponents.Button"
+        android:backgroundTint="#4F46E5"/>
+
+</LinearLayout>

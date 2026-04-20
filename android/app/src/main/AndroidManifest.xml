@@ -26,6 +26,7 @@
         <activity android:name=".activities.CreatePostActivity" />
         <activity android:name=".activities.EditPostActivity" />
         <activity android:name=".activities.PostDetailActivity" />
+        <activity android:name=".activities.NotFoundActivity" />
 
     </application>
 
